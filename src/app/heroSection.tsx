@@ -25,14 +25,16 @@ export default function HeroSection() {
                     {user.data.email}
                 </p>
                 <Link href="/logout" className="text-sm font-semibold leading-6 text-gray-900">
-                    Log out <span aria-hidden="true">&rarr;</span>
+                    Log out
+                    {/*<span aria-hidden="true">&rarr;</span>*/}
                 </Link>
             </div>)
 
         } else {
-            (<div className="lg:flex lg:flex-1 lg:justify-end">
+           return (<div className="lg:flex lg:flex-1 lg:justify-end">
                 <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900">
-                    Log in <span aria-hidden="true">&rarr;</span>
+                    Log in
+                    {/*<span aria-hidden="true">&rarr;</span>*/}
                 </Link>
             </div>)
         }
