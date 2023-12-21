@@ -4,7 +4,7 @@ import AuthContext from "@/components/context/AuthContext";
 import {parseJwt} from "@/components/misc/Helpers";
 import {useRouter, useSearchParams} from "next/navigation";
 
-function OAuth2Redirect() {
+function OAuth2Redirect(): React.ReactNode {
     const { userLogin } = useContext(AuthContext);
     const router = useRouter();
     const [redirectTo, setRedirectTo] = useState('/login')

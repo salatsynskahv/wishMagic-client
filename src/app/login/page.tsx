@@ -5,7 +5,7 @@ import {serviceApi} from '@/components/misc/ServiceApi'
 import {parseJwt, getSocialLoginUrl, handleLogError} from '@/components/misc/Helpers'
 import Link from "next/link";
 
-function Login() {
+function Login(): React.JSX.Element {
     const Auth = useAuth();
     const isLoggedIn = Auth.userIsAuthenticated()
 
