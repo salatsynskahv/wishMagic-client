@@ -5,8 +5,7 @@ import {parseJwt} from './Helpers'
 export const serviceApi = {
     authenticate,
     signup,
-    numberOfUsers,
-    numberOfMovies,
+    logout,
     getUsers,
     deleteUser,
     getMovies,
@@ -33,13 +32,12 @@ function signup(user) {
     })
 }
 
-function numberOfUsers() {
-    return instance.get('/public/numberOfUsers')
+function logout(user) {
+    return instance.get('/logout', {
+        headers: {'Authorization': bearerAuth(user)}
+    });
 }
 
-function numberOfMovies() {
-    return instance.get('/public/numberOfMovies')
-}
 
 function getUsers(user, username) {
     const url = username ? `/api/users/${username}` : '/api/users'

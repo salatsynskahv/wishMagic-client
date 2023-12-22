@@ -4,5 +4,4 @@ import React from "react";
 
 export default (): React.JSX.Element => (
     <HeroSection/>
-
 )
