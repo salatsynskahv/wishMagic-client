@@ -1,18 +1,23 @@
 'use client';
-import React, {useEffect} from "react";
+import React, {useEffect, useLayoutEffect} from "react";
 import {useRouter} from "next/navigation";
-import {serviceApi} from '@/components/misc/ServiceApi'
+
 import {useAuth} from "@/components/context/AuthContext";
+import {serviceApi} from "@/components/services/api/ServiceApi";
 
 export default function Logout(): React.JSX.Element {
     const router = useRouter();
     const {getUser} = useAuth();
 
-
-    useEffect(() => {
-        serviceApi.logout(getUser()).then(
+    useLayoutEffect(() => {
+        const user = getUser();
+        serviceApi.logout(user).then(
             (result) => {
                 console.log(result);
+            }
+        ).catch(
+            (error) => {
+                console.log(error)
             }
         );
         // router.push("/");

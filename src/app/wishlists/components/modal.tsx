@@ -1,12 +1,21 @@
-import React, {useReducer, useState} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 import axios from "axios";
-import {serviceApi} from "../misc/ServiceApi";
+import {serviceApi} from "@/components/services/api/ServiceApi";
+import {useSelector} from "react-redux";
+import {Wish} from "@/types/Wish";
+import {RootState} from "@reduxjs/toolkit/query";
+import Wishlist from "@/types/Wishlist";
+import {createWishlistItem} from "@/components/services/api/WishlistService";
+import {router} from "next/client";
 
-export default function Modal({showModal, setShowModal}) {
-    const [link, setLink] = useState();
-    const dataReducer = (state, action) => {
+export default function Modal({showModal, setShowModal}: any) {
+    const [link, setLink] = useState<string>();
+    const wishlists = useSelector((state: any) => state.wishlist.wishlists);
+    const [selectedWishlist, setSelectedWishlist] = useState<Wishlist| null>(null);
+
+
+    const dataReducer = (state: any, action: any) => {
         if (action.type === "init") {
-            console.log(action.payload);
             return {...state, ...action.payload};
         }
         if (action.type === "input") {
@@ -18,9 +27,8 @@ export default function Modal({showModal, setShowModal}) {
     const inputStyle = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
 
-
-
     console.log(data);
+
     function submitLink() {
         serviceApi.scrappingFromUrl(link).then((result) => {
             dispatchData({
@@ -30,6 +38,43 @@ export default function Modal({showModal, setShowModal}) {
             console.log(result.data);
         })
     }
+
+    function createWish() {
+        const wish: Wish = {
+            name: data.title,
+            price: data.price,
+            wishlistId: selectedWishlist?.id || wishlists[0]?.id,
+            image: data.imageUrl,
+            link: link,
+            comment: data.comment
+        }
+
+        createWishlistItem(wish).then(
+            (result) => {
+                console.log(result);
+                router.push('/')
+            }
+        ).catch((error) => {
+
+        })
+    }
+
+
+    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedId = parseInt(event.target.value, 10);
+        // @ts-ignore
+        const selected = wishlists.find((wishlist) => wishlist.id === selectedId);
+        setSelectedWishlist(selected);
+    };
+
+    useEffect(() => {
+        // Do something with the selectedWishlist, for example, dispatch an action or call a function
+        if (selectedWishlist) {
+            console.log('Selected Wishlist:', selectedWishlist);
+        }
+    }, [selectedWishlist]);
+
+
 
     return (
         <>
@@ -86,8 +131,15 @@ export default function Modal({showModal, setShowModal}) {
                                 {
                                     data &&
                                     <div className="flex flex-col mx-10 my-6">
-                                        {/*<label htmlFor="Назва вішліста"></label>*/}
-                                        {/*<select></select>*/}
+                                        <label>Select Wishlist:</label>
+                                        <select onChange={handleSelectChange}>
+                                            // @ts-ignore
+                                            {wishlists.map((wishlist : Wishlist) => (
+                                                <option key={wishlist.id} value={wishlist.id}>
+                                                    {wishlist.title}
+                                                </option>
+                                            ))}
+                                        </select>
                                         <label htmlFor="title">Назва бажання</label>
                                         <input
                                             className={inputStyle}
@@ -142,13 +194,13 @@ export default function Modal({showModal, setShowModal}) {
                                     >
                                         Close
                                     </button>
-                                    {/*<button*/}
-                                    {/*    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"*/}
-                                    {/*    type="button"*/}
-                                    {/*    onClick={submitLink}*/}
-                                    {/*>*/}
-                                    {/*    Add wish*/}
-                                    {/*</button>*/}
+                                    <button
+                                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        type="button"
+                                        onClick={createWish}
+                                    >
+                                        Add wish
+                                    </button>
                                 </div>
                             </div>
                         </div>

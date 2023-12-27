@@ -1,7 +1,7 @@
 'use client'
 import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from "@/components/context/AuthContext";
-import {parseJwt} from "@/components/misc/Helpers";
+import {parseJwt} from "@/components/services/Helpers";
 import {useRouter, useSearchParams} from "next/navigation";
 
 function OAuth2Redirect(): React.ReactNode {

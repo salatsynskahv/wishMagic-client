@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import Modal from "../utils/Modal";
+import Modal from "./modal";
 
-export const CreateWishlist = () => {
+const CreateWishlist = () => {
     const [showModal, setShowModal] = React.useState(false);
 
     return (
@@ -21,3 +21,5 @@ export const CreateWishlist = () => {
         </div>
     )
 }
+
+export default CreateWishlist;

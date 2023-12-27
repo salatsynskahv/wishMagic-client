@@ -8,10 +8,18 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
 
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
+  //color: rgb(var(--foreground-rgb));
+  //background: rgb(var(--background-start-rgb));
 }
 
+
+.gradient-bg {
+  background: linear-gradient(90deg, #ffffff 50%, #e9d8f4 100%);
+}

@@ -1,10 +1,11 @@
 'use client'
-import {useState} from 'react'
+import React, {useState} from 'react'
 import {Dialog} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import Link from 'next/link';
 import {useAuth} from "@/components/context/AuthContext";
-import {CreateWishlist} from "@/components/wishlist/CreateWishlist";
+import {serviceApi} from "@/components/services/api/ServiceApi";
+import CreateWishlist from "@/app/wishlists/components/createWishlist";
 
 const navigation = [
     {name: 'Wishlists', href: '/wishlists'},
@@ -13,20 +14,33 @@ const navigation = [
 
 export default function HeroSection() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const {getUser} = useAuth();
+    const {getUser, userLogout} = useAuth();
+    const logout = () => {
+        const user = getUser();
+        serviceApi.logout(user).then(
+            (result) => {
+                // console.log(result);
+                userLogout();
+            }
+        ).catch(
+            (error) => {
+                console.log(error)
+            }
+        );
+    }
 
     function userLogInfo() {
         const user = getUser();
-        console.log(user);
+        // console.log(user);
         if (user) {
             return (<div className="lg:flex lg:flex-1 lg:justify-end">
                 <p className="px-2">
                     {user.data.email}
                 </p>
-                <Link href="/logout" className="text-sm font-semibold leading-6 text-gray-900">
+                <button onClick={logout} className="text-sm font-semibold leading-6 text-gray-900">
                     Log out
                     {/*<span aria-hidden="true">&rarr;</span>*/}
-                </Link>
+                </button>
             </div>)
 
         } else {

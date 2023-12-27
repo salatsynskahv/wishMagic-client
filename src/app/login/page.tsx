@@ -1,8 +1,8 @@
 'use client'
 import React, {FormEvent, useState} from 'react'
 import {useAuth} from '@/components/context/AuthContext'
-import {serviceApi} from '@/components/misc/ServiceApi'
-import {parseJwt, getSocialLoginUrl, handleLogError} from '@/components/misc/Helpers'
+import {serviceApi} from '@/components/services/api/ServiceApi'
+import {parseJwt, getSocialLoginUrl, handleLogError} from '@/components/services/Helpers'
 import Link from "next/link";
 
 function Login(): React.JSX.Element {

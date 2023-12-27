@@ -12,7 +12,7 @@ function AuthProvider({children}) {
     }, [])
 
     const getUser = () => {
-        return user;
+        return JSON.parse(localStorage.getItem('user'));
     }
 
     const userIsAuthenticated = () => {
