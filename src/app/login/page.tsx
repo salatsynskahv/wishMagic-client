@@ -50,8 +50,8 @@ function Login(): React.JSX.Element {
                  style={{backgroundColor: "white"}}>
                 <h1 className="w-fit text-xl font-bold"> Увійдіть або зареєструйтесь</h1>
                 <br/>
-                <p className="text-l">Створіть ідеальний список бажань, </p> <p> щоб поділитись ним з рідними та
-                друзями</p>
+                <p className="text-l">Створіть ідеальний список бажань, </p>
+                <p> щоб поділитись ним з рідними та друзями</p>
                 <div className="flex flex-col gap-4 pt-5 w-full">
                     <Link
                         href={getSocialLoginUrl('google')}

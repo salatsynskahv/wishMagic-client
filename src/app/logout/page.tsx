@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect, useLayoutEffect} from "react";
+import React, { useLayoutEffect} from "react";
 import {useRouter} from "next/navigation";
 
 import {useAuth} from "@/components/context/AuthContext";

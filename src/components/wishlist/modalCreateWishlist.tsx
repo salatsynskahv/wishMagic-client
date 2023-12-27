@@ -1,18 +1,18 @@
+'use client'
 import React, {useEffect, useReducer, useState} from "react";
-import axios from "axios";
 import {serviceApi} from "@/components/services/api/ServiceApi";
-import {useSelector} from "react-redux";
 import {Wish} from "@/types/Wish";
-import {RootState} from "@reduxjs/toolkit/query";
 import Wishlist from "@/types/Wishlist";
 import {createWishlistItem} from "@/components/services/api/WishlistService";
-import {router} from "next/client";
+import {useAppSelector} from "@/lib/hooks";
+import {useRouter} from "next/navigation";
 
-export default function Modal({showModal, setShowModal}: any) {
+export default function ModalCreateWishlist({showModal, setShowModal}: any) {
     const [link, setLink] = useState<string>();
-    const wishlists = useSelector((state: any) => state.wishlist.wishlists);
+    const wishlists = useAppSelector((state: any) => state.wishlist);
+    console.log(wishlists);
+    const router = useRouter();
     const [selectedWishlist, setSelectedWishlist] = useState<Wishlist| null>(null);
-
 
     const dataReducer = (state: any, action: any) => {
         if (action.type === "init") {
@@ -26,8 +26,6 @@ export default function Modal({showModal, setShowModal}: any) {
     const [data, dispatchData] = useReducer(dataReducer, {});
     const inputStyle = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
-
-    console.log(data);
 
     function submitLink() {
         serviceApi.scrappingFromUrl(link).then((result) => {
@@ -43,7 +41,7 @@ export default function Modal({showModal, setShowModal}: any) {
         const wish: Wish = {
             name: data.title,
             price: data.price,
-            wishlistId: selectedWishlist?.id || wishlists[0]?.id,
+            wishlistId: selectedWishlist?.id || wishlists.wishlists[0]?.id,
             image: data.imageUrl,
             link: link,
             comment: data.comment
@@ -63,7 +61,7 @@ export default function Modal({showModal, setShowModal}: any) {
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedId = parseInt(event.target.value, 10);
         // @ts-ignore
-        const selected = wishlists.find((wishlist) => wishlist.id === selectedId);
+        const selected = wishlists.wishlists.find((wishlist) => wishlist.id === selectedId);
         setSelectedWishlist(selected);
     };
 
@@ -131,10 +129,10 @@ export default function Modal({showModal, setShowModal}: any) {
                                 {
                                     data &&
                                     <div className="flex flex-col mx-10 my-6">
-                                        <label>Select Wishlist:</label>
+                                        <label>Selecvt Wishlist:</label>
                                         <select onChange={handleSelectChange}>
                                             // @ts-ignore
-                                            {wishlists.map((wishlist : Wishlist) => (
+                                            {wishlists.wishlists.map((wishlist : Wishlist) => (
                                                 <option key={wishlist.id} value={wishlist.id}>
                                                     {wishlist.title}
                                                 </option>

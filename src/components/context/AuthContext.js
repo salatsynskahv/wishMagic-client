@@ -7,12 +7,17 @@ function AuthProvider({children}) {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem('user'))
-        setUser(storedUser)
+        if (typeof window !== 'undefined') {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            setUser(storedUser)
+        }
+
     }, [])
 
     const getUser = () => {
-        return JSON.parse(localStorage.getItem('user'));
+        if (typeof window !== 'undefined') {
+            return JSON.parse(localStorage.getItem('user'));
+        }
     }
 
     const userIsAuthenticated = () => {
@@ -35,13 +40,17 @@ function AuthProvider({children}) {
     }
 
     const userLogin = user => {
-        localStorage.setItem('user', JSON.stringify(user))
-        setUser(user)
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('user', JSON.stringify(user))
+            setUser(user)
+        }
     }
 
     const userLogout = () => {
-        localStorage.removeItem('user')
-        setUser(null)
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('user')
+            setUser(null)
+        }
     }
 
     const contextValue = {

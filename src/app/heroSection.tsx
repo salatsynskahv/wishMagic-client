@@ -5,7 +5,7 @@ import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import Link from 'next/link';
 import {useAuth} from "@/components/context/AuthContext";
 import {serviceApi} from "@/components/services/api/ServiceApi";
-import CreateWishlist from "@/app/wishlists/components/createWishlist";
+import CreateWishlist from "@/components/wishlist/createWishlist";
 
 const navigation = [
     {name: 'Wishlists', href: '/wishlists'},
@@ -32,25 +32,23 @@ export default function HeroSection() {
     function userLogInfo() {
         const user = getUser();
         // console.log(user);
-        if (user) {
-            return (<div className="lg:flex lg:flex-1 lg:justify-end">
-                <p className="px-2">
-                    {user.data.email}
-                </p>
-                <button onClick={logout} className="text-sm font-semibold leading-6 text-gray-900">
-                    Log out
-                    {/*<span aria-hidden="true">&rarr;</span>*/}
-                </button>
-            </div>)
-
-        } else {
-           return (<div className="lg:flex lg:flex-1 lg:justify-end">
-                <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900">
+        return (
+            <div className="lg:flex lg:flex-1 lg:justify-end">
+                {user ? (
+                    <>
+                        <p className="px-2">{user.data.email}</p>
+                        <button onClick={logout} className="text-sm font-semibold leading-6 text-gray-900">
+                            Log out
+                        </button>
+                    </>
+                ) : (
+                   <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900">
                     Log in
-                    {/*<span aria-hidden="true">&rarr;</span>*/}
-                </Link>
-            </div>)
-        }
+                {/*<span aria-hidden="true">&rarr;</span>*/}
+                    </Link>
+                )}
+            </div>
+        );
     }
 
     return (
