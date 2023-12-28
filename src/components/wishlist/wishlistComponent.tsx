@@ -5,25 +5,11 @@ import {Wish} from "@/types/Wish";
 import {WishItemCard} from "@/components/wishlist/wishItemCard";
 
 const WishlistComponent = ({wishlist}: { wishlist: Wishlist }) => {
-    const [wishes, setWishes] = useState<Wish[]>();
-
-    useEffect(() => {
-        getAllWishesByWishlistId(wishlist.id).then(
-            (result) => {
-                console.log(result);
-                setWishes(result.data);
-            }
-        ).catch(
-            (error) => {
-                console.log(error);
-            }
-        )
-    }, []);
 
     return (
         <>
             {
-                wishes && wishes.map(
+                wishlist.wishes && wishlist.wishes.map(
                     wish =>
                         <WishItemCard wishItem={wish}></WishItemCard>
                 )

@@ -4,16 +4,18 @@ import {serviceApi} from "@/components/services/api/ServiceApi";
 import {Wish} from "@/types/Wish";
 import Wishlist from "@/types/Wishlist";
 import {createWishlistItem} from "@/components/services/api/WishlistService";
-import {useAppSelector} from "@/lib/hooks";
+import {useAppDispatch, useAppSelector} from "@/lib/hooks";
 import {useRouter} from "next/navigation";
+// @ts-ignore
+import {addWish} from "@/components/store/slices/wishlistSlice";
 
-export default function ModalCreateWishlist({showModal, setShowModal}: any) {
+export default function ModalCreateWishlist({showModal, setShowModal}: {showModal: boolean, setShowModal: React.Dispatch<React.SetStateAction<boolean>>}) {
     const [link, setLink] = useState<string>();
     const wishlists = useAppSelector((state: any) => state.wishlist);
     console.log(wishlists);
     const router = useRouter();
     const [selectedWishlist, setSelectedWishlist] = useState<Wishlist| null>(null);
-
+    const reduxDispatch = useAppDispatch()
     const dataReducer = (state: any, action: any) => {
         if (action.type === "init") {
             return {...state, ...action.payload};
@@ -50,7 +52,8 @@ export default function ModalCreateWishlist({showModal, setShowModal}: any) {
         createWishlistItem(wish).then(
             (result) => {
                 console.log(result);
-                router.push('/')
+                reduxDispatch(addWish({wishlistId: wish.wishlistId, wish: wish}));
+                setShowModal(false);
             }
         ).catch((error) => {
 
@@ -129,7 +132,7 @@ export default function ModalCreateWishlist({showModal, setShowModal}: any) {
                                 {
                                     data &&
                                     <div className="flex flex-col mx-10 my-6">
-                                        <label>Selecvt Wishlist:</label>
+                                        <label>Select Wishlist:</label>
                                         <select onChange={handleSelectChange}>
                                             // @ts-ignore
                                             {wishlists.wishlists.map((wishlist : Wishlist) => (

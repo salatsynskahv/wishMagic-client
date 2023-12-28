@@ -1,3 +1,5 @@
+import {Wish} from "@/types/Wish";
+
 type Wishlist = {
     id: number;
     userId: number;
@@ -5,6 +7,7 @@ type Wishlist = {
     createdAt: string;
     isPrivate: boolean;
     status: string;
+    wishes: Wish[];
 };
 
 export default Wishlist;

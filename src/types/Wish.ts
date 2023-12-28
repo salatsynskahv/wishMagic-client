@@ -3,7 +3,7 @@ export type Wish = {
     wishlistId: number | undefined;
     name: string;
     price?: string;
-    image?: string;
+    imageUrl?: string;
     link?: string;
     comment?: string;// Optional property for image
     // Add other properties as needed

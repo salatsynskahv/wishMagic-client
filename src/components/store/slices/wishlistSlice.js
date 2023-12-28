@@ -24,11 +24,14 @@ export const wishlistsSlice = createSlice({
             state.wishlists.push(action.payload.wishlist);
         },
         addWish: (state, action) => {
-            const { wishlistId, wish } = action.payload;
+            const {wishlistId, wish} = action.payload;
             const wishlist = state.wishlists.find(w => w.id === wishlistId);
 
             if (wishlist) {
-                wishlist.items.push(wish);
+                if (!wishlist.wishes) {
+                    wishlist.wishes = [];
+                }
+                wishlist.wishes.push(wish);
             }
         },
         remove: (state, action) => {
@@ -38,6 +41,6 @@ export const wishlistsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {init, add, remove} = wishlistsSlice.actions
+export const {init, add, remove, addWish} = wishlistsSlice.actions
 
 export default wishlistsSlice.reducer
