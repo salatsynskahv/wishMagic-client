@@ -1,17 +1,18 @@
 import Wishlist from "@/types/Wishlist";
-import React, {useEffect, useState} from "react";
-import {getAllWishesByWishlistId} from "@/components/services/api/WishService";
-import {Wish} from "@/types/Wish";
 import {WishItemCard} from "@/components/wishlist/wishItemCard";
+import {useRouter} from "next/navigation";
 
-const WishlistComponent = ({wishlist}: { wishlist: Wishlist }) => {
-
+const WishlistComponent = ({wishlist}: {
+    wishlist: Wishlist
+}) => {
+    const route = useRouter();
     return (
         <>
             {
                 wishlist.wishes && wishlist.wishes.map(
                     wish =>
-                        <WishItemCard wishItem={wish}></WishItemCard>
+                        <WishItemCard navigateWish={() => { route.push(`wishlists/wish/${wishlist.id}/${wish.id}`)
+                        }} wishItem={wish}></WishItemCard>
                 )
             }
         </>

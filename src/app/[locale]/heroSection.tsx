@@ -6,6 +6,7 @@ import Link from 'next/link';
 import {useAuth} from "@/components/context/AuthContext";
 import {serviceApi} from "@/components/services/api/ServiceApi";
 import CreateWishlist from "@/components/wishlist/createWishlist";
+import {useTranslations} from "next-intl";
 
 const navigation = [
     {name: 'Wishlists', href: '/wishlists'},
@@ -15,6 +16,7 @@ const navigation = [
 export default function HeroSection() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const {getUser, userLogout} = useAuth();
+    const t = useTranslations('Index');
     const logout = () => {
         const user = getUser();
         serviceApi.logout(user).then(
@@ -52,7 +54,7 @@ export default function HeroSection() {
     }
 
     return (
-        <div className="bg-white">
+        <>
             <header className="absolute inset-x-0 top-0 z-50">
                 <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                     <div className="flex lg:flex-1">
@@ -148,7 +150,7 @@ export default function HeroSection() {
                         }}
                     />
                 </div>
-                <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+                <div className="max-w-3xl py-32 sm:py-48 lg:py-56 ">
                     {/*<div className="hidden sm:mb-8 sm:flex sm:justify-center">*/}
                     {/*    <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">*/}
                     {/*        Announcing our next round of funding.{' '}*/}
@@ -158,22 +160,25 @@ export default function HeroSection() {
                     {/*        </a>*/}
                     {/*    </div>*/}
                     {/*</div>*/}
-                    <div className="text-center">
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                            WishMagic - save and manage wish list
+
+                    <div className="ml-20 white-gradient">
+                        <h1 className="top-0 left-0 [font-family:'Inter-Bold',Helvetica] font-bold text-[#404958] text-6xl tracking-[0] leading-[normal]">
+                            {t('banner_title')}
                         </h1>
                         <p className="mt-6 text-lg leading-8 text-gray-600">
-                            Easy to create custom wishlists.
-                            Share with friends.
-                            Track Friends wishlists.
+                            {t('banner_text')}
                         </p>
-                        <div className="mt-10 flex items-center justify-center gap-x-6">
 
-                            <CreateWishlist/>
-                            <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                                Find friends wishlists <span aria-hidden="true">→</span>
-                            </a>
-                        </div>
+                    </div>
+                    <div className="px-5 py-14 bg-white rounded-xl justify-center items-center gap-2 flex">
+                        <a href="#" className="text-sm leading-6 text-red-800 text-[24px] font-medium font-['Inter']">
+                            {t('join')}
+                        </a>
+
+                        {/*<CreateWishlist/>*/}
+                        {/*<a href="#" className="text-sm font-semibold leading-6 text-gray-900">*/}
+                        {/*    Find friends wishlists <span aria-hidden="true">→</span>*/}
+                        {/*</a>*/}
                     </div>
                 </div>
                 {/*<div*/}
@@ -189,6 +194,6 @@ export default function HeroSection() {
                 {/*    />*/}
                 {/*</div>*/}
             </div>
-        </div>
+        </>
     )
 }

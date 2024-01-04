@@ -44,7 +44,7 @@ export default function ModalCreateWishlist({showModal, setShowModal}: {showModa
             name: data.title,
             price: data.price,
             wishlistId: selectedWishlist?.id || wishlists.wishlists[0]?.id,
-            image: data.imageUrl,
+            imageUrl: data.imageUrl,
             link: link,
             comment: data.comment
         }

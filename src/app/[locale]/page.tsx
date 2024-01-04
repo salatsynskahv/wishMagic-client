@@ -1,21 +1,18 @@
 'use client'
-import HeroSection from "@/app/heroSection";
+import HeroSection from "@/app/[locale]/heroSection";
 import React, {useEffect, useState} from "react";
-import Wishlists from "@/app/wishlists/page";
-import {Provider, useDispatch} from "react-redux";
+import Wishlists from "@/app/[locale]/wishlists/page";
 import {getUserWishlist} from "@/components/services/api/WishlistService";
-import configurePreloadedStore from "@/components/store/store";
-import Wishlist from "@/types/Wishlist";
 import {useAuth} from "@/components/context/AuthContext";
-import store from "@/components/store/store";
-import StoreProvider from "@/app/StoreProvider";
 import {useAppDispatch} from "@/lib/hooks";
 import {init} from "@/components/store/slices/wishlistSlice";
+import {useTranslations} from "next-intl";
 
 export default (): React.JSX.Element => {
     const [loading, setLoading] = useState(true);
     const dispatch = useAppDispatch();
     const {getUser} = useAuth();
+    const t = useTranslations('Index');
 
     useEffect(() => {
         const user = getUser();

@@ -13,7 +13,7 @@ export default function Wishlists() {
     }
 
     return (
-        <div className="mx-6 my-10 grid grid-cols-4 gap-1">
+        <div className="mx-6 my-10 grid grid-cols-4 gap-1" id="wishlists-section">
         {wishlists && wishlists?.wishlists.map((wishlist: Wishlist) => <WishlistComponent wishlist={wishlist}/>)}
     </div>
     )
